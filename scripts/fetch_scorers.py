@@ -12,7 +12,9 @@ import urllib.request
 try:
     import pandas as pd
 except ModuleNotFoundError as error:
-    raise SystemExit("Instale as dependencias com: .\\.venv\\Scripts\\python.exe -m pip install -r requirements.txt") from error
+    raise SystemExit(
+        "Instale as dependencias com: .\\.venv\\Scripts\\python.exe -m pip install -r requirements.txt"
+    ) from error
 
 
 BASE_URL = "https://api.football-data.org/v4"
@@ -72,7 +74,9 @@ def request_json(path: str, params: dict | None = None) -> tuple[dict, dict]:
         raise SystemExit("Defina FOOTBALL_DATA_TOKEN antes de rodar.")
 
     query = f"?{urllib.parse.urlencode(params)}" if params else ""
-    request = urllib.request.Request(f"{BASE_URL}{path}{query}", headers={"X-Auth-Token": token})
+    request = urllib.request.Request(
+        f"{BASE_URL}{path}{query}", headers={"X-Auth-Token": token}
+    )
 
     for _ in range(2):
         try:
@@ -83,7 +87,16 @@ def request_json(path: str, params: dict | None = None) -> tuple[dict, dict]:
                 return data, headers
         except urllib.error.HTTPError as error:
             if error.code == 429:
-                wait = number(header(dict(error.headers.items()), "X-RequestCounter-Reset", "Retry-After")) or 60
+                wait = (
+                    number(
+                        header(
+                            dict(error.headers.items()),
+                            "X-RequestCounter-Reset",
+                            "Retry-After",
+                        )
+                    )
+                    or 60
+                )
                 time.sleep(wait + 1)
                 continue
             body = error.read().decode("utf-8", errors="replace")
@@ -112,7 +125,9 @@ def build_dataframe(scorers: list[dict], as_of: date) -> pd.DataFrame:
                 "jogador": player.get("name"),
                 "selecao": translate(team.get("name"), TEAMS_PT),
                 "idade": age_on(player.get("dateOfBirth"), as_of),
-                "posicao": translate(player.get("position") or player.get("section"), POSITIONS_PT),
+                "posicao": translate(
+                    player.get("position") or player.get("section"), POSITIONS_PT
+                ),
                 "jogos": matches,
                 "gols": goals,
                 "assistencias": assists,
@@ -135,7 +150,12 @@ def self_check() -> None:
     df = build_dataframe(
         [
             {
-                "player": {"id": 1, "name": "A", "dateOfBirth": "2000-01-01", "section": "Offence"},
+                "player": {
+                    "id": 1,
+                    "name": "A",
+                    "dateOfBirth": "2000-01-01",
+                    "section": "Offence",
+                },
                 "team": {"id": 10, "name": "Argentina"},
                 "playedMatches": 2,
                 "goals": 3,
@@ -171,15 +191,22 @@ def main() -> None:
 
     data, headers = fetch_scorers(args.competition, args.season)
     scorers = data.get("scorers", [])
-    scorers.sort(key=lambda item: (number(item.get("goals")), number(item.get("assists"))), reverse=True)
+    scorers.sort(
+        key=lambda item: (number(item.get("goals")), number(item.get("assists"))),
+        reverse=True,
+    )
     df = build_dataframe(scorers, args.as_of)
     write_csv(df, args.output)
 
-    print(f"competition: {data.get('competition', {}).get('name')} ({args.competition})")
+    print(
+        f"competition: {data.get('competition', {}).get('name')} ({args.competition})"
+    )
     print(f"season: {args.season}")
     print(f"scorers_found: {len(scorers)}")
     print(f"csv: {args.output}")
-    print(f"requests_left: {header(headers, 'X-RequestsAvailable', 'X-RequestsAvailable-Minute')}")
+    print(
+        f"requests_left: {header(headers, 'X-RequestsAvailable', 'X-RequestsAvailable-Minute')}"
+    )
     print(f"reset_seconds: {header(headers, 'X-RequestCounter-Reset')}")
     print()
     print(df.head(args.limit).to_string(index=False))

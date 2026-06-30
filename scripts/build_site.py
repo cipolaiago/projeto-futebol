@@ -8,7 +8,6 @@ import pandas as pd
 CSV_PATH = Path("data/processed/wc_2026_player_scorers.csv")
 SITE_DIR = Path("site")
 INDEX_PATH = SITE_DIR / "index.html"
-SITE_CSV_PATH = SITE_DIR / "wc_2026_player_scorers.csv"
 
 
 def percent(value: float, max_value: float) -> float:
@@ -131,26 +130,9 @@ def build_site() -> None:
     }}
     main {{ padding: 24px 0 40px; }}
     .toolbar {{
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
       margin-bottom: 14px;
     }}
     .updated {{ color: var(--muted); font-size: 14px; }}
-    a.button {{
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 38px;
-      border-radius: 8px;
-      background: var(--accent);
-      color: white;
-      padding: 0 14px;
-      font-weight: 700;
-      text-decoration: none;
-    }}
     .table-wrap {{
       overflow-x: auto;
       border: 1px solid var(--line);
@@ -221,7 +203,6 @@ def build_site() -> None:
   <main class="wrap">
     <div class="toolbar">
       <div class="updated">Atualizado em {generated_at}</div>
-      <a class="button" href="wc_2026_player_scorers.csv" download>Baixar CSV</a>
     </div>
     <div class="table-wrap">
       <table>
@@ -252,7 +233,6 @@ def build_site() -> None:
 
     SITE_DIR.mkdir(parents=True, exist_ok=True)
     INDEX_PATH.write_text(html, encoding="utf-8")
-    SITE_CSV_PATH.write_text(CSV_PATH.read_text(encoding="utf-8-sig"), encoding="utf-8-sig")
 
 
 if __name__ == "__main__":

@@ -32,7 +32,7 @@ jobs:
       - name: Fetch scorers
         env:
           FOOTBALL_DATA_TOKEN: ${{ secrets.FOOTBALL_DATA_TOKEN }}
-        run: python scripts/fetch_scorers.py --competition WC --season 2026 --as-of 2026-06-30
+        run: python scripts/fetch_scorers.py --competition WC --season 2026
 
       - name: Build static site
         run: python scripts/build_site.py
