@@ -126,7 +126,6 @@ def build_rows(df: pd.DataFrame, image_lookup: dict[str, str]) -> str:
                 </div>
               </td>
               <td>{escape(text(row["selecao"]))}</td>
-              <td>{whole(row["jogos"])}</td>
               <td>
                 <div class="metric">
                   <strong>{whole(row["gols"])}</strong>
@@ -135,7 +134,8 @@ def build_rows(df: pd.DataFrame, image_lookup: dict[str, str]) -> str:
               </td>
               <td>{whole(row["assistencias"])}</td>
               <td>{whole(row["participacoes_em_gols"])}</td>
-              <td>{decimal(row["gols_por_jogo"])}</td>
+              <td>{whole(row["jogos"])}</td>
+              <td>{decimal(row["gols_por_jogo"], 1)}</td>
             </tr>
             """
         )
@@ -155,7 +155,7 @@ def build_site() -> None:
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Artilharia da Copa 2026</title>
+  <title>Melhores jogadores Copa do Mundo 2026</title>
   <style>
     :root {{
       color-scheme: dark;
@@ -527,8 +527,8 @@ def build_site() -> None:
     <div class="wrap hero">
       <div>
         <span class="eyebrow">Ranking ao vivo</span>
-        <h1>Artilharia da Copa 2026</h1>
-        <p class="sub">Ranking de jogadores com gols, assist&ecirc;ncias e participa&ccedil;&atilde;o direta em gols. Fotos dos atletas, barras de desempenho e lideran&ccedil;a em destaque para leitura r&aacute;pida.</p>
+        <h1>Melhores jogadores Copa do Mundo 2026</h1>
+        <p class="sub">Ranking de jogadores com gols, assist&ecirc;ncias e participa&ccedil;&atilde;o direta em gols.</p>
         <div class="summary">
           <div class="stat"><strong>{len(df)}</strong><span>jogadores no ranking</span></div>
           <div class="stat"><strong>{whole(df["gols"].sum())}</strong><span>gols somados na tabela</span></div>
@@ -546,7 +546,7 @@ def build_site() -> None:
         </div>
         <div class="leader-score">
           <div><strong>{whole(leader["gols"])}</strong><span>gols</span></div>
-          <div><strong>{decimal(leader["gols_por_jogo"])}</strong><span>gols por jogo</span></div>
+          <div><strong>{decimal(leader["gols_por_jogo"], 1)}</strong><span>gols por jogo</span></div>
         </div>
       </aside>
     </div>
@@ -564,10 +564,10 @@ def build_site() -> None:
             <th>#</th>
             <th>Jogador</th>
             <th>Sele&ccedil;&atilde;o</th>
-            <th>Jogos</th>
             <th>Gols</th>
             <th>Assist&ecirc;ncias</th>
             <th>Part. em gols</th>
+            <th>Jogos</th>
             <th>Gols/jogo</th>
           </tr>
         </thead>
