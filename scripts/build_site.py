@@ -358,7 +358,7 @@ def build_site() -> None:
     }}
     table {{
       width: 100%;
-      min-width: 940px;
+      min-width: 820px;
       border-collapse: collapse;
     }}
     caption {{
@@ -370,7 +370,7 @@ def build_site() -> None:
       white-space: nowrap;
     }}
     th, td {{
-      padding: 14px 16px;
+      padding: 11px 10px;
       border-bottom: 1px solid var(--panel-line);
       text-align: left;
       white-space: nowrap;
@@ -402,8 +402,8 @@ def build_site() -> None:
     .rank-badge {{
       display: inline-grid;
       place-items: center;
-      width: 34px;
-      height: 34px;
+      width: 30px;
+      height: 30px;
       border-radius: 8px;
       background: #edf1e3;
       color: #2d3933;
@@ -423,12 +423,12 @@ def build_site() -> None:
       color: #2d1707;
     }}
     .player-cell {{
-      min-width: 280px;
+      min-width: 230px;
     }}
     .player-card {{
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }}
     .player-card strong {{
       display: block;
@@ -444,8 +444,8 @@ def build_site() -> None:
     }}
     .avatar {{
       flex: 0 0 auto;
-      width: 56px;
-      height: 56px;
+      width: 48px;
+      height: 48px;
       border: 2px solid #ffffff;
       border-radius: 8px;
       background: #dfe7d4;
@@ -468,9 +468,9 @@ def build_site() -> None:
     .metric {{
       display: grid;
       align-items: center;
-      grid-template-columns: 30px 1fr;
-      gap: 10px;
-      min-width: 150px;
+      grid-template-columns: 26px 1fr;
+      gap: 8px;
+      min-width: 108px;
     }}
     .metric strong {{
       font-size: 16px;
@@ -511,7 +511,7 @@ def build_site() -> None:
         margin-top: 6px;
       }}
       th, td {{
-        padding: 12px;
+        padding: 10px 8px;
       }}
     }}
     @media (prefers-reduced-motion: reduce) {{
